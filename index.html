@@ -36,7 +36,7 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { height: 100%; }
   body {
-    background: linear-gradient(var(--bg), var(--bg2));
+    background: linear-gradient(var(--bg), var(--bg2)) fixed;
     color: var(--ink);
     font-family: 'Nunito', system-ui, sans-serif;
     min-height: 100dvh;
@@ -44,7 +44,53 @@
   }
   .app { max-width: 560px; margin: 0 auto; padding: 14px 14px 40px; }
 
-  /* ---------- шапка профиля ---------- */
+  /* ---------- сайдбар (десктоп) ---------- */
+  .sidebar {
+    display: none;
+    flex-direction: column; gap: 14px;
+    background: var(--panel);
+    border: 3px solid var(--ink);
+    border-radius: 18px;
+    box-shadow: 5px 5px 0 var(--shadow);
+    padding: 18px 16px;
+  }
+  .side-logo { font-family: 'Unbounded'; font-weight: 900; font-size: 1.45rem; }
+  .side-logo span { color: var(--accent); }
+  .side-profile {
+    background: var(--bg);
+    border: 3px solid var(--ink);
+    border-radius: 14px;
+    padding: 12px;
+    cursor: pointer;
+  }
+  .side-profile .row { display: flex; align-items: center; gap: 10px; }
+  .side-profile .tokens { margin-top: 8px; text-align: right; }
+  .nav-btn {
+    display: block; width: 100%; text-align: left;
+    font-family: 'Unbounded'; font-weight: 700; font-size: 0.85rem;
+    background: var(--bg); color: var(--ink);
+    border: 3px solid var(--ink); border-radius: 12px;
+    padding: 11px 14px; cursor: pointer;
+  }
+  .nav-btn:hover { background: var(--line); }
+  .nav-btn.active { background: var(--accent); color: #FFF8EE; }
+  .side-mascot { font-size: 2rem; text-align: center; margin-top: auto; }
+
+  /* ---------- переключатель языка ---------- */
+  .lang { display: flex; gap: 6px; }
+  .lang button {
+    flex: 1;
+    font-family: 'Unbounded'; font-weight: 700; font-size: 0.68rem;
+    padding: 7px 0;
+    background: var(--bg); color: var(--ink);
+    border: 2px solid var(--ink); border-radius: 8px;
+    cursor: pointer;
+  }
+  .lang button.active { background: var(--accent); border-color: var(--accent); color: #FFF8EE; }
+  .lang button:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+  .lang-mobile { max-width: 200px; margin: 0 0 12px auto; }
+
+  /* ---------- шапка (мобилка) ---------- */
   .topbar {
     display: flex; align-items: center; gap: 12px;
     background: var(--panel);
@@ -69,8 +115,8 @@
     linear-gradient(var(--bg), var(--bg)) padding-box,
     linear-gradient(135deg, #FF5722, #FFC107) border-box; }
   .top-info { flex: 1; min-width: 0; }
-  .top-name { font-weight: 800; font-size: 1.02rem; display: flex; gap: 8px; align-items: baseline; }
-  .top-name .lvl { color: var(--accent); font-family: 'Unbounded'; font-size: 0.8rem; white-space: nowrap; }
+  .top-name { font-weight: 800; font-size: 1.02rem; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+  .top-name .lvl { color: var(--accent); font-family: 'Unbounded'; font-size: 0.78rem; white-space: nowrap; }
   .xpbar {
     height: 10px; border: 2px solid var(--ink); border-radius: 99px;
     background: var(--bg); overflow: hidden; margin-top: 5px;
@@ -85,7 +131,7 @@
     color: var(--gold); white-space: nowrap;
   }
 
-  /* ---------- заголовки/экраны ---------- */
+  /* ---------- экраны ---------- */
   .screen { display: none; }
   .screen.active { display: block; }
   h1 {
@@ -103,24 +149,27 @@
     border: 3px solid var(--ink);
     border-radius: 16px;
     box-shadow: 4px 4px 0 var(--shadow);
-    padding: 16px 12px 14px;
-    text-align: center;
+    overflow: hidden;
     cursor: pointer;
     transition: transform 0.08s;
   }
   .gcard:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--shadow); }
-  .gcard .ic { font-size: 2.2rem; }
-  .gcard .nm { font-family: 'Unbounded'; font-weight: 700; font-size: 0.85rem; margin-top: 6px; }
-  .gcard .ds { color: var(--ink-soft); font-size: 0.78rem; margin-top: 3px; }
-  .gcard .bs { margin-top: 8px; font-size: 0.75rem; font-weight: 800; color: var(--green); }
+  .gcard .cover {
+    height: 72px;
+    display: grid; place-items: center;
+    font-size: 2.4rem;
+    border-bottom: 3px solid var(--ink);
+  }
+  .gcard .gbody { padding: 9px 12px 11px; }
+  .gcard .nm { font-family: 'Unbounded'; font-weight: 700; font-size: 0.82rem; }
+  .gcard .ds { color: var(--ink-soft); font-size: 0.76rem; margin-top: 3px; }
+  .gcard .bs { margin-top: 7px; font-size: 0.74rem; font-weight: 800; color: var(--green); }
   .gcard.soon { opacity: 0.55; cursor: default; }
   .gcard.soon:active { transform: none; box-shadow: 4px 4px 0 var(--shadow); }
+  .gcard.soon .cover { background: var(--bg); }
 
   /* ---------- маскот ---------- */
-  .mascot {
-    display: flex; gap: 10px; align-items: flex-end;
-    margin-top: 20px;
-  }
+  .mascot { display: flex; gap: 10px; align-items: flex-end; margin-top: 20px; }
   .mascot .face { font-size: 2.6rem; animation: bounce 2.4s ease-in-out infinite; }
   @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
   @media (prefers-reduced-motion: reduce) { .mascot .face { animation: none; } }
@@ -146,8 +195,6 @@
   .btn.sm { font-size: 0.78rem; padding: 8px 16px; box-shadow: 3px 3px 0 var(--ink); }
   .btn.ghost { background: var(--panel); color: var(--ink); }
   .btn:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
-  .btn:disabled { opacity: 0.45; cursor: default; }
-  .btn:disabled:active { transform: none; box-shadow: 4px 4px 0 var(--ink); }
   .backrow { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 10px; }
 
   /* ---------- игровая сцена ---------- */
@@ -164,10 +211,7 @@
     user-select: none; -webkit-user-select: none;
   }
   .stage canvas { display: block; width: 100%; height: 100%; }
-  .hud {
-    display: flex; gap: 16px; justify-content: center;
-    font-weight: 800; margin: 10px 0;
-  }
+  .hud { display: flex; gap: 16px; justify-content: center; font-weight: 800; margin: 10px 0; }
   .overlay {
     position: absolute; inset: 0;
     background: color-mix(in srgb, var(--panel) 90%, transparent);
@@ -178,10 +222,7 @@
   .overlay .big { font-size: 2.6rem; }
   .overlay h3 { font-family: 'Unbounded'; font-size: 1.1rem; }
   .overlay p { color: var(--ink-soft); font-size: 0.9rem; max-width: 34ch; }
-  .reward {
-    display: flex; gap: 14px; margin: 6px 0;
-    font-family: 'Unbounded'; font-weight: 700; font-size: 0.9rem;
-  }
+  .reward { display: flex; gap: 14px; margin: 6px 0; font-family: 'Unbounded'; font-weight: 700; font-size: 0.9rem; }
   .reward .xp { color: var(--green); }
   .reward .tk { color: var(--gold); }
 
@@ -213,10 +254,9 @@
   .shop-item .pr { font-size: 0.72rem; font-weight: 800; color: var(--gold); margin-top: 4px; }
   .shop-item.owned .pr { color: var(--green); }
   .shop-item.equipped { border-color: var(--green); box-shadow: 0 0 0 2px var(--green) inset; }
-  .frames-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-  .stat-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 2px dashed var(--line); font-size: 0.9rem; }
+  .stat-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 2px dashed var(--line); font-size: 0.9rem; gap: 10px; }
   .stat-row:last-child { border-bottom: none; }
-  .stat-row b { font-family: 'Unbounded'; font-size: 0.82rem; }
+  .stat-row b { font-family: 'Unbounded'; font-size: 0.82rem; white-space: nowrap; }
 
   /* ---------- ежедневный бонус ---------- */
   .daily {
@@ -228,23 +268,17 @@
     padding: 10px 14px;
     margin-bottom: 14px;
     font-weight: 800; font-size: 0.88rem;
+    flex-wrap: wrap;
   }
 
   /* ---------- достижения ---------- */
-  .ach-row {
-    display: flex; align-items: center; gap: 12px;
-    padding: 9px 0;
-    border-bottom: 2px dashed var(--line);
-  }
+  .ach-row { display: flex; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 2px dashed var(--line); }
   .ach-row:last-child { border-bottom: none; }
   .ach-row .em { font-size: 1.5rem; width: 34px; text-align: center; flex: none; }
   .ach-row .tx { flex: 1; min-width: 0; }
   .ach-row .tx b { font-size: 0.9rem; }
   .ach-row .tx small { display: block; color: var(--ink-soft); font-size: 0.78rem; }
-  .ach-row .rw {
-    font-family: 'Unbounded'; font-weight: 700; font-size: 0.78rem;
-    color: var(--gold); white-space: nowrap;
-  }
+  .ach-row .rw { font-family: 'Unbounded'; font-weight: 700; font-size: 0.78rem; color: var(--gold); white-space: nowrap; }
   .ach-row.done .rw { color: var(--green); }
   .ach-row.locked { opacity: 0.55; }
   .ach-row.locked .em { filter: grayscale(1); }
@@ -258,124 +292,150 @@
     white-space: nowrap; z-index: 50;
   }
   #toast.show { opacity: 1; }
+
+  /* ================= ДЕСКТОП: ЛАУНЧЕР ================= */
+  @media (min-width: 900px) {
+    .app {
+      max-width: 1180px;
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 26px;
+      align-items: start;
+      padding: 24px 24px 48px;
+    }
+    .sidebar { display: flex; position: sticky; top: 24px; min-height: calc(100dvh - 48px); }
+    .topbar { display: none; }
+    .lang-mobile { display: none; }
+    h1, .sub { text-align: left; }
+    h1 { font-size: 1.9rem; }
+    .games { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .gcard .cover { height: 128px; font-size: 3.6rem; }
+    .gcard .nm { font-size: 0.95rem; }
+    .gcard .ds { font-size: 0.82rem; }
+    .stage { max-width: 470px; }
+    .mascot { max-width: 520px; }
+    .daily { max-width: 640px; }
+  }
 </style>
 </head>
 <body>
 <div class="app">
 
-  <!-- шапка профиля (всегда видна) -->
-  <div class="topbar" id="topbar" title="Відкрити профіль">
-    <div class="ava" id="topAva">🙂</div>
-    <div class="top-info">
-      <div class="top-name"><span id="topName">Гравець</span> <span class="lvl">рів. <span id="topLvl">1</span></span></div>
-      <div class="xpbar"><i id="topXp" style="width:0%"></i></div>
-    </div>
-    <div class="tokens">🪙 <span id="topTokens">0</span></div>
-  </div>
-
-  <!-- ГЛАВНАЯ -->
-  <section class="screen active" id="scr-home">
-    <h1>Вар<span class="v">Грай</span></h1>
-    <p class="sub">Грай в аркади, качай рівень, збирай токени!</p>
-
-    <div class="daily" id="dailyBox"></div>
-
-    <div class="games">
-      <div class="gcard" data-game="varenyk">
-        <div class="ic">🥟</div>
-        <div class="nm">Впіймай вареник</div>
-        <div class="ds">Лови їжу, тікай від перцю</div>
-        <div class="bs">Рекорд: <span id="best-varenyk">0</span></div>
-      </div>
-      <div class="gcard" data-game="snake">
-        <div class="ic">🐍</div>
-        <div class="nm">Змійка</div>
-        <div class="ds">Класика. Їж яблука, не вкусись</div>
-        <div class="bs">Рекорд: <span id="best-snake">0</span></div>
-      </div>
-      <div class="gcard" data-game="react">
-        <div class="ic">⚡</div>
-        <div class="nm">Реакція</div>
-        <div class="ds">Тисни, коли стане зелено</div>
-        <div class="bs">Рекорд: <span id="best-react">—</span></div>
-      </div>
-      <div class="gcard" data-game="miner">
-        <div class="ic">💣</div>
-        <div class="nm">Сапер</div>
-        <div class="ds">Відкривай поле, не втрапляй на міну</div>
-        <div class="bs">Рекорд: <span id="best-miner">—</span></div>
-      </div>
-      <div class="gcard soon">
-        <div class="ic">🔒</div>
-        <div class="nm">Скоро…</div>
-        <div class="ds">Нові ігри в розробці</div>
-        <div class="bs">&nbsp;</div>
-      </div>
-    </div>
-
-    <div class="mascot">
-      <div class="face">🥟</div>
-      <div class="bubble" id="mascotSay"><b>Варенчик:</b> Привіт! Зіграємо?</div>
-    </div>
-  </section>
-
-  <!-- ПРОФИЛЬ -->
-  <section class="screen" id="scr-profile">
-    <div class="backrow">
-      <button class="btn sm ghost" data-nav="home">← Назад</button>
-      <span class="tokens">🪙 <span id="profTokens">0</span></span>
-    </div>
-
-    <div class="card">
-      <div class="profile-head">
-        <div class="ava" id="profAva">🙂</div>
-        <div style="flex:1">
-          <div class="top-name"><span id="profName">Гравець</span> <span class="lvl">рів. <span id="profLvl">1</span></span></div>
-          <div class="xpbar" style="margin-top:8px"><i id="profXp" style="width:0%"></i></div>
-          <div style="font-size:0.78rem;color:var(--ink-soft);margin-top:4px"><span id="profXpText"></span></div>
+  <!-- ===== САЙДБАР (десктоп) ===== -->
+  <aside class="sidebar">
+    <div class="side-logo">Вар<span>Грай</span> 🕹️</div>
+    <div class="side-profile" id="sideProfile">
+      <div class="row">
+        <div class="ava" id="sAva">🙂</div>
+        <div style="flex:1;min-width:0">
+          <div class="top-name"><span id="sName">Гравець</span></div>
+          <div class="top-name"><span class="lvl"><span id="lvlWordS"></span> <span id="sLvl">1</span></span></div>
         </div>
       </div>
-      <div class="nick-row">
-        <input id="nickInput" maxlength="16" placeholder="Твій нік">
-        <button class="btn sm" id="nickSave">Ок</button>
+      <div class="xpbar" style="margin-top:8px"><i id="sXp" style="width:0%"></i></div>
+      <div class="tokens">🪙 <span id="sTokens">0</span></div>
+    </div>
+    <button class="nav-btn" data-nav="home" id="navHome">🏠</button>
+    <button class="nav-btn" data-nav="profile" id="navProfile">👤</button>
+    <div class="side-mascot">🥟</div>
+    <div class="lang">
+      <button data-lang="uk" type="button">UA</button>
+      <button data-lang="en" type="button">EN</button>
+      <button data-lang="ru" type="button">RU</button>
+    </div>
+  </aside>
+
+  <!-- ===== КОНТЕНТ ===== -->
+  <main class="content">
+
+    <!-- шапка (мобилка) -->
+    <div class="topbar" id="topbar">
+      <div class="ava" id="topAva">🙂</div>
+      <div class="top-info">
+        <div class="top-name"><span id="topName">Гравець</span> <span class="lvl"><span id="lvlWordT"></span> <span id="topLvl">1</span></span></div>
+        <div class="xpbar"><i id="topXp" style="width:0%"></i></div>
       </div>
+      <div class="tokens">🪙 <span id="topTokens">0</span></div>
     </div>
 
-    <h2>😎 Аватари</h2>
-    <div class="shop-grid" id="avaShop"></div>
+    <!-- ГЛАВНАЯ -->
+    <section class="screen active" id="scr-home">
+      <h1>Вар<span class="v">Грай</span></h1>
+      <p class="sub" id="subTag"></p>
 
-    <h2>🖼️ Рамки</h2>
-    <div class="frames-grid" id="frameShop"></div>
+      <div class="daily" id="dailyBox"></div>
+      <div class="games" id="gamesGrid"></div>
 
-    <h2>🏅 Досягнення <span style="color:var(--ink-soft);font-size:0.8rem" id="achCount"></span></h2>
-    <div class="card" id="achBox"></div>
+      <div class="mascot">
+        <div class="face">🥟</div>
+        <div class="bubble" id="mascotSay"></div>
+      </div>
+    </section>
 
-    <h2>📊 Статистика</h2>
-    <div class="card" id="statsBox"></div>
-  </section>
+    <!-- ПРОФИЛЬ -->
+    <section class="screen" id="scr-profile">
+      <div class="backrow">
+        <button class="btn sm ghost" data-nav="home" id="profBack">←</button>
+        <span class="tokens">🪙 <span id="profTokens">0</span></span>
+      </div>
 
-  <!-- ИГРА: сцена общая -->
-  <section class="screen" id="scr-game">
-    <div class="backrow">
-      <button class="btn sm ghost" data-nav="home" id="gameBack">← Вийти</button>
-      <div class="hud" style="margin:0" id="gameHud"></div>
-    </div>
-    <div class="stage" id="stage">
-      <canvas id="cv"></canvas>
-      <div class="overlay" id="gameOverlay">
-        <div class="big" id="ovEmoji">🎮</div>
-        <h3 id="ovTitle">Гра</h3>
-        <p id="ovText"></p>
-        <div class="reward" id="ovReward" style="display:none">
-          <span class="xp">+<span id="ovXp">0</span> XP</span>
-          <span class="tk">+<span id="ovTk">0</span> 🪙</span>
+      <div class="lang lang-mobile">
+        <button data-lang="uk" type="button">UA</button>
+        <button data-lang="en" type="button">EN</button>
+        <button data-lang="ru" type="button">RU</button>
+      </div>
+
+      <div class="card">
+        <div class="profile-head">
+          <div class="ava" id="profAva">🙂</div>
+          <div style="flex:1">
+            <div class="top-name"><span id="profName">Гравець</span> <span class="lvl"><span id="lvlWordP"></span> <span id="profLvl">1</span></span></div>
+            <div class="xpbar" style="margin-top:8px"><i id="profXp" style="width:0%"></i></div>
+            <div style="font-size:0.78rem;color:var(--ink-soft);margin-top:4px"><span id="profXpText"></span></div>
+          </div>
         </div>
-        <button class="btn" id="ovBtn">Грати</button>
+        <div class="nick-row">
+          <input id="nickInput" maxlength="16">
+          <button class="btn sm" id="nickSave">Ok</button>
+        </div>
       </div>
-    </div>
-    <p class="sub" id="gameHint" style="margin-top:10px"></p>
-  </section>
 
+      <h2 id="hAva"></h2>
+      <div class="shop-grid" id="avaShop"></div>
+
+      <h2 id="hFr"></h2>
+      <div class="shop-grid" id="frameShop"></div>
+
+      <h2><span id="hAch"></span> <span style="color:var(--ink-soft);font-size:0.8rem" id="achCount"></span></h2>
+      <div class="card" id="achBox"></div>
+
+      <h2 id="hSt"></h2>
+      <div class="card" id="statsBox"></div>
+    </section>
+
+    <!-- ИГРА -->
+    <section class="screen" id="scr-game">
+      <div class="backrow">
+        <button class="btn sm ghost" data-nav="home" id="gameBack">←</button>
+        <div class="hud" style="margin:0" id="gameHud"></div>
+      </div>
+      <div class="stage" id="stage">
+        <canvas id="cv"></canvas>
+        <div class="overlay" id="gameOverlay">
+          <div class="big" id="ovEmoji">🎮</div>
+          <h3 id="ovTitle"></h3>
+          <p id="ovText"></p>
+          <div class="reward" id="ovReward" style="display:none">
+            <span class="xp">+<span id="ovXp">0</span> XP</span>
+            <span class="tk">+<span id="ovTk">0</span> 🪙</span>
+          </div>
+          <button class="btn" id="ovBtn"></button>
+        </div>
+      </div>
+      <p class="sub" id="gameHint" style="margin-top:10px;text-align:center"></p>
+    </section>
+
+  </main>
 </div>
 <div id="toast"></div>
 
@@ -383,10 +443,254 @@
 (function () {
   'use strict';
 
+  /* ================= ПЕРЕВОДЫ ================= */
+
+  const T = {
+    uk: {
+      tag: 'Грай в аркади, качай рівень, збирай токени!',
+      nav_home: '🏠 Головна', nav_profile: '👤 Профіль',
+      back: '← Назад', exit: '← Вийти', rec: 'Рекорд', lvl: 'рів.',
+      soon: 'Скоро…', soon_d: 'Нові ігри в розробці',
+      g_varenyk: 'Впіймай вареник', g_varenyk_d: 'Лови їжу, тікай від перцю',
+      g_snake: 'Змійка', g_snake_d: 'Їж яблука, не вкусись',
+      g_react: 'Реакція', g_react_d: 'Тисни, коли стане зелено',
+      g_miner: 'Сапер', g_miner_d: 'Не втрап на міну',
+      daily_done: '✅ Бонус забрано · серія: {n} дн.', daily_come: 'Повертайся завтра!',
+      daily_new: '🎁 Щоденний бонус · день {n}', daily_take: 'Забрати {n} 🪙',
+      daily_toast: '🎁 +{tk} 🪙 · серія {n} дн.',
+      lvlup: '🎉 Новий рівень {n}! +{tk} 🪙',
+      mascot_lvl: 'Оце так! Рівень <b>{n}</b>! Тримай токени 🪙',
+      mascot_daily: 'Тримай щоденні токени! Серія — <b>{n}</b>. Не пропускай!',
+      h_ava: '😎 Аватари', h_fr: '🖼️ Рамки', h_ach: '🏅 Досягнення', h_st: '📊 Статистика',
+      nick_ph: 'Твій нік', nick_saved: 'Нік збережено!',
+      owned: 'є', equipped: 'обрано', no_tokens: 'Не вистачає токенів 🪙', bought: 'Куплено {x}!',
+      frame_bought: 'Рамка «{x}» твоя!',
+      fr_none: 'Без рамки', fr_gold: 'Золото', fr_neon: 'Неон', fr_fire: 'Вогонь',
+      st_plays: 'Зіграно ігор', st_var: '🥟 Вареники — рекорд', st_snake: '🐍 Змійка — рекорд',
+      st_react: '⚡ Реакція — найкраща', st_miner: '💣 Сапер — найшвидша перемога',
+      xp_to: '{a} / {b} XP до рівня {n}',
+      play: 'Грати', again: 'Ще раз', ms: 'мс', s: 'с', record: 'Новий рекорд!',
+      var_intro: 'Вареник +1, сметана +5, перець — мінус життя. Впав вареник — теж мінус!',
+      var_hint: 'Веди пальцем по полю або стрілками ← →',
+      var_over: 'Гру закінчено', var_score: 'Впіймано вареників: {n}',
+      sn_intro: 'Їж яблука, рости, не врізайся в стіни й себе. Швидкість росте!',
+      sn_hint: 'Свайпи пальцем або стрілки на клавіатурі',
+      sn_over: 'Ай, вкусилась!', sn_score: 'З\u2019їдено яблук: {n}',
+      re_intro: 'Екран червоний — чекай. Став зелений — тисни! 5 раундів, рахуємо середнє.',
+      re_hint: 'Чекай зеленого і тисни якнайшвидше. 5 раундів.',
+      re_round: '⚡ раунд {a}/{b}', re_wait: 'Чекай…', re_wait2: 'Тисни, коли стане зелено',
+      re_go: 'ТИСНИ!', re_early: 'Зарано! 😅', re_early2: 'Дочекайся зеленого', re_next: 'Далі…',
+      re_done: 'Готово!', re_res: 'Середня реакція: {n} мс. {c}',
+      re_c1: 'Кібер-рефлекси! Ти точно людина?', re_c2: 'Дуже спритно!',
+      re_c3: 'Нормальна людська реакція.', re_c4: 'Варенчик і то швидший… але XP твій!',
+      mi_intro: 'Відкрий усі клітинки без мін. Цифра — скільки мін поруч. Перший тап завжди безпечний!',
+      mi_hint: 'Тап — відкрити, довгий тап — прапорець 🚩. Режим прапорця: ',
+      mi_flag_off: '🚩 вимк', mi_flag_on: '🚩 УВІМК',
+      mi_boom: 'Бум!', mi_boom_t: 'Міна… Відкрито клітинок: {n}. Трохи XP за сміливість!',
+      mi_win: 'Поле чисте!', mi_win_t: 'Розміновано за {n} с. Варенчик пишається!',
+      mi_flags_out: 'Прапорці скінчились!',
+      ach_toast: '🏅 Досягнення «{x}» +{tk} 🪙',
+      mname: 'Варенчик',
+      tips: [
+        'Кажуть, сметана 🥛 дає +5. Кажуть…',
+        'Назбирай токенів і купи собі 🐉!',
+        'Перець 🌶️ — не їжа. Запам\u2019ятай.',
+        'Кожна гра дає XP. Навіть якщо програв!',
+        'Поділись грою з другом — і побий його рекорд.',
+        'У Сапері перший тап завжди безпечний 💣',
+        'Заходь щодня — серія росте, бонус жирнішає 🎁'
+      ],
+      ach: {
+        first: ['Перший раз', 'Зіграй свою першу гру'],
+        p25: ['Завсідник', 'Зіграй 25 ігор'],
+        p100: ['Ігроман', 'Зіграй 100 ігор'],
+        var100: ['Вареникова сотня', 'Впіймай 100 вареників сумарно'],
+        var30: ['Шеф-кухар', '30+ очок за одну партію вареників'],
+        snake15: ['Анаконда', '15+ яблук за одну партію змійки'],
+        react250: ['Кібер-рефлекс', 'Середня реакція швидше 250 мс'],
+        miner1: ['Розмінувальник', 'Виграй партію в Сапера'],
+        miner60: ['Швидка рука', 'Виграй Сапера швидше 60 секунд'],
+        lvl5: ['П\u2019ятірка', 'Досягни 5 рівня'],
+        lvl10: ['Десятка', 'Досягни 10 рівня'],
+        shop: ['Модник', 'Купи свій перший аватар'],
+        streak7: ['Тиждень з нами', 'Серія щоденних входів: 7 днів']
+      }
+    },
+    en: {
+      tag: 'Play arcades, level up, collect tokens!',
+      nav_home: '🏠 Home', nav_profile: '👤 Profile',
+      back: '← Back', exit: '← Exit', rec: 'Best', lvl: 'lvl',
+      soon: 'Soon…', soon_d: 'New games in the works',
+      g_varenyk: 'Catch the Dumpling', g_varenyk_d: 'Catch food, dodge peppers',
+      g_snake: 'Snake', g_snake_d: 'Eat apples, don\u2019t bite yourself',
+      g_react: 'Reaction', g_react_d: 'Tap when it turns green',
+      g_miner: 'Minesweeper', g_miner_d: 'Don\u2019t step on a mine',
+      daily_done: '✅ Bonus claimed · streak: {n} days', daily_come: 'Come back tomorrow!',
+      daily_new: '🎁 Daily bonus · day {n}', daily_take: 'Claim {n} 🪙',
+      daily_toast: '🎁 +{tk} 🪙 · streak {n} days',
+      lvlup: '🎉 Level {n}! +{tk} 🪙',
+      mascot_lvl: 'Whoa! Level <b>{n}</b>! Here are your tokens 🪙',
+      mascot_daily: 'Daily tokens for you! Streak — <b>{n}</b>. Don\u2019t skip!',
+      h_ava: '😎 Avatars', h_fr: '🖼️ Frames', h_ach: '🏅 Achievements', h_st: '📊 Stats',
+      nick_ph: 'Your nickname', nick_saved: 'Nickname saved!',
+      owned: 'owned', equipped: 'active', no_tokens: 'Not enough tokens 🪙', bought: 'Bought {x}!',
+      frame_bought: 'Frame "{x}" is yours!',
+      fr_none: 'No frame', fr_gold: 'Gold', fr_neon: 'Neon', fr_fire: 'Fire',
+      st_plays: 'Games played', st_var: '🥟 Dumplings — best', st_snake: '🐍 Snake — best',
+      st_react: '⚡ Reaction — best', st_miner: '💣 Minesweeper — fastest win',
+      xp_to: '{a} / {b} XP to level {n}',
+      play: 'Play', again: 'Again', ms: 'ms', s: 's', record: 'New record!',
+      var_intro: 'Dumpling +1, sour cream +5, pepper costs a life. Dropped dumpling — a life too!',
+      var_hint: 'Drag your finger or use ← → keys',
+      var_over: 'Game over', var_score: 'Dumplings caught: {n}',
+      sn_intro: 'Eat apples, grow, avoid walls and yourself. Speed rises!',
+      sn_hint: 'Swipe or use arrow keys',
+      sn_over: 'Ouch, bitten!', sn_score: 'Apples eaten: {n}',
+      re_intro: 'Red screen — wait. Green — tap! 5 rounds, we average it.',
+      re_hint: 'Wait for green, then tap fast. 5 rounds.',
+      re_round: '⚡ round {a}/{b}', re_wait: 'Wait…', re_wait2: 'Tap when it turns green',
+      re_go: 'TAP!', re_early: 'Too early! 😅', re_early2: 'Wait for green', re_next: 'Next…',
+      re_done: 'Done!', re_res: 'Average reaction: {n} ms. {c}',
+      re_c1: 'Cyber reflexes! Are you even human?', re_c2: 'Very quick!',
+      re_c3: 'Perfectly normal human reaction.', re_c4: 'Even Varenchyk is faster… but the XP is yours!',
+      mi_intro: 'Open every cell without a mine. Numbers show mines nearby. First tap is always safe!',
+      mi_hint: 'Tap — open, long press — flag 🚩. Flag mode: ',
+      mi_flag_off: '🚩 off', mi_flag_on: '🚩 ON',
+      mi_boom: 'Boom!', mi_boom_t: 'A mine… Cells opened: {n}. Some XP for bravery!',
+      mi_win: 'Field cleared!', mi_win_t: 'Cleared in {n} s. Varenchyk is proud!',
+      mi_flags_out: 'No flags left!',
+      ach_toast: '🏅 Achievement "{x}" +{tk} 🪙',
+      mname: 'Varenchyk',
+      tips: [
+        'They say sour cream 🥛 gives +5. They say…',
+        'Save up tokens and buy yourself a 🐉!',
+        'Pepper 🌶️ is not food. Remember that.',
+        'Every game gives XP. Even a lost one!',
+        'Share the game with a friend — then beat their record.',
+        'In Minesweeper the first tap is always safe 💣',
+        'Come back daily — the streak grows the bonus 🎁'
+      ],
+      ach: {
+        first: ['First Time', 'Play your first game'],
+        p25: ['Regular', 'Play 25 games'],
+        p100: ['Gamer', 'Play 100 games'],
+        var100: ['Dumpling Hundred', 'Catch 100 dumplings in total'],
+        var30: ['Chef', '30+ points in one dumpling run'],
+        snake15: ['Anaconda', '15+ apples in one snake run'],
+        react250: ['Cyber Reflex', 'Average reaction under 250 ms'],
+        miner1: ['Deminer', 'Win a Minesweeper round'],
+        miner60: ['Quick Hands', 'Win Minesweeper under 60 seconds'],
+        lvl5: ['High Five', 'Reach level 5'],
+        lvl10: ['Perfect Ten', 'Reach level 10'],
+        shop: ['Fashionista', 'Buy your first avatar'],
+        streak7: ['A Week With Us', 'Daily login streak: 7 days']
+      }
+    },
+    ru: {
+      tag: 'Играй в аркады, качай уровень, собирай токены!',
+      nav_home: '🏠 Главная', nav_profile: '👤 Профиль',
+      back: '← Назад', exit: '← Выйти', rec: 'Рекорд', lvl: 'ур.',
+      soon: 'Скоро…', soon_d: 'Новые игры в разработке',
+      g_varenyk: 'Поймай вареник', g_varenyk_d: 'Лови еду, избегай перца',
+      g_snake: 'Змейка', g_snake_d: 'Ешь яблоки, не укуси себя',
+      g_react: 'Реакция', g_react_d: 'Жми, когда станет зелёным',
+      g_miner: 'Сапёр', g_miner_d: 'Не наступи на мину',
+      daily_done: '✅ Бонус получен · серия: {n} дн.', daily_come: 'Возвращайся завтра!',
+      daily_new: '🎁 Ежедневный бонус · день {n}', daily_take: 'Забрать {n} 🪙',
+      daily_toast: '🎁 +{tk} 🪙 · серия {n} дн.',
+      lvlup: '🎉 Новый уровень {n}! +{tk} 🪙',
+      mascot_lvl: 'Вот это да! Уровень <b>{n}</b>! Держи токены 🪙',
+      mascot_daily: 'Держи ежедневные токены! Серия — <b>{n}</b>. Не пропускай!',
+      h_ava: '😎 Аватары', h_fr: '🖼️ Рамки', h_ach: '🏅 Достижения', h_st: '📊 Статистика',
+      nick_ph: 'Твой ник', nick_saved: 'Ник сохранён!',
+      owned: 'есть', equipped: 'выбрано', no_tokens: 'Не хватает токенов 🪙', bought: 'Куплено {x}!',
+      frame_bought: 'Рамка «{x}» твоя!',
+      fr_none: 'Без рамки', fr_gold: 'Золото', fr_neon: 'Неон', fr_fire: 'Огонь',
+      st_plays: 'Сыграно игр', st_var: '🥟 Вареники — рекорд', st_snake: '🐍 Змейка — рекорд',
+      st_react: '⚡ Реакция — лучшая', st_miner: '💣 Сапёр — быстрейшая победа',
+      xp_to: '{a} / {b} XP до уровня {n}',
+      play: 'Играть', again: 'Ещё раз', ms: 'мс', s: 'с', record: 'Новый рекорд!',
+      var_intro: 'Вареник +1, сметана +5, перец — минус жизнь. Упал вареник — тоже минус!',
+      var_hint: 'Веди пальцем по полю или стрелками ← →',
+      var_over: 'Игра окончена', var_score: 'Поймано вареников: {n}',
+      sn_intro: 'Ешь яблоки, расти, не врезайся в стены и себя. Скорость растёт!',
+      sn_hint: 'Свайпы пальцем или стрелки на клавиатуре',
+      sn_over: 'Ай, укусилась!', sn_score: 'Съедено яблок: {n}',
+      re_intro: 'Экран красный — жди. Стал зелёным — жми! 5 раундов, считаем среднее.',
+      re_hint: 'Жди зелёного и жми как можно быстрее. 5 раундов.',
+      re_round: '⚡ раунд {a}/{b}', re_wait: 'Жди…', re_wait2: 'Жми, когда станет зелёным',
+      re_go: 'ЖМИ!', re_early: 'Рано! 😅', re_early2: 'Дождись зелёного', re_next: 'Дальше…',
+      re_done: 'Готово!', re_res: 'Средняя реакция: {n} мс. {c}',
+      re_c1: 'Кибер-рефлексы! Ты точно человек?', re_c2: 'Очень шустро!',
+      re_c3: 'Нормальная человеческая реакция.', re_c4: 'Варенчик и то быстрее… но XP твой!',
+      mi_intro: 'Открой все клетки без мин. Цифра — сколько мин рядом. Первый тап всегда безопасен!',
+      mi_hint: 'Тап — открыть, долгий тап — флажок 🚩. Режим флажка: ',
+      mi_flag_off: '🚩 выкл', mi_flag_on: '🚩 ВКЛ',
+      mi_boom: 'Бум!', mi_boom_t: 'Мина… Открыто клеток: {n}. Немного XP за смелость!',
+      mi_win: 'Поле чистое!', mi_win_t: 'Разминировано за {n} с. Варенчик гордится!',
+      mi_flags_out: 'Флажки закончились!',
+      ach_toast: '🏅 Достижение «{x}» +{tk} 🪙',
+      mname: 'Варенчик',
+      tips: [
+        'Говорят, сметана 🥛 даёт +5. Говорят…',
+        'Накопи токенов и купи себе 🐉!',
+        'Перец 🌶️ — не еда. Запомни.',
+        'Каждая игра даёт XP. Даже проигранная!',
+        'Поделись игрой с другом — и побей его рекорд.',
+        'В Сапёре первый тап всегда безопасен 💣',
+        'Заходи каждый день — серия растит бонус 🎁'
+      ],
+      ach: {
+        first: ['Первый раз', 'Сыграй свою первую игру'],
+        p25: ['Завсегдатай', 'Сыграй 25 игр'],
+        p100: ['Игроман', 'Сыграй 100 игр'],
+        var100: ['Вареничная сотня', 'Поймай 100 вареников суммарно'],
+        var30: ['Шеф-повар', '30+ очков за одну партию вареников'],
+        snake15: ['Анаконда', '15+ яблок за одну партию змейки'],
+        react250: ['Кибер-рефлекс', 'Средняя реакция быстрее 250 мс'],
+        miner1: ['Разминировщик', 'Выиграй партию в Сапёра'],
+        miner60: ['Быстрая рука', 'Выиграй Сапёра быстрее 60 секунд'],
+        lvl5: ['Пятёрка', 'Достигни 5 уровня'],
+        lvl10: ['Десятка', 'Достигни 10 уровня'],
+        shop: ['Модник', 'Купи свой первый аватар'],
+        streak7: ['Неделя с нами', 'Серия ежедневных входов: 7 дней']
+      }
+    }
+  };
+
+  let LANG = detectLang();
+  function detectLang() {
+    try {
+      const saved = localStorage.getItem('vargrai_lang');
+      if (saved && T[saved]) return saved;
+    } catch (e) {}
+    const langs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || 'uk'];
+    for (const l of langs) {
+      const p = String(l).toLowerCase().slice(0, 2);
+      if (T[p]) return p;
+    }
+    return 'en';
+  }
+  function t(key) { return (T[LANG] && T[LANG][key] !== undefined) ? T[LANG][key] : T.uk[key]; }
+  function fmt(str, vars) {
+    return String(str).replace(/\{(\w+)\}/g, (m, k) => (vars && vars[k] !== undefined) ? vars[k] : m);
+  }
+  function setLang(l) {
+    if (!T[l]) return;
+    LANG = l;
+    try { localStorage.setItem('vargrai_lang', l); } catch (e) {}
+    document.documentElement.lang = l === 'uk' ? 'uk' : l;
+    applyLang();
+  }
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-lang]');
+    if (b) setLang(b.dataset.lang);
+  });
+
   /* ================= ПРОФИЛЬ И ПРОГРЕСС ================= */
 
   const DEFAULT_PROFILE = {
-    name: 'Гравець',
+    name: '',
     avatar: '🙂',
     frame: 'none',
     xp: 0,
@@ -415,14 +719,14 @@
           ach: Array.isArray(p.ach) ? p.ach : []
         });
       }
-    } catch (e) { /* приватный режим */ }
+    } catch (e) {}
     return JSON.parse(JSON.stringify(DEFAULT_PROFILE));
   }
   function save() {
     try { localStorage.setItem('vargrai_profile', JSON.stringify(P)); } catch (e) {}
   }
+  function playerName() { return P.name || (LANG === 'en' ? 'Player' : (LANG === 'ru' ? 'Игрок' : 'Гравець')); }
 
-  // Кривая уровней: сколько XP нужно, чтобы перейти с уровня n на n+1
   function xpNeed(level) { return 80 + (level - 1) * 45; }
 
   function addXp(amount) {
@@ -432,17 +736,17 @@
       P.xp -= xpNeed(P.level);
       P.level++;
       leveled++;
-      P.tokens += 25; // бонус за уровень
+      P.tokens += 25;
     }
     if (leveled > 0) {
-      toast('🎉 Новий рівень ' + P.level + '! +' + (25 * leveled) + ' 🪙');
-      mascot('Оце так! Рівень <b>' + P.level + '</b>! Тримай токени 🪙');
+      toast(fmt(t('lvlup'), { n: P.level, tk: 25 * leveled }));
+      mascot(fmt(t('mascot_lvl'), { n: P.level }));
     }
     save(); renderTop();
   }
   function addTokens(n) { P.tokens += n; save(); renderTop(); }
 
-  /* ================= UI: НАВИГАЦИЯ ================= */
+  /* ================= НАВИГАЦИЯ ================= */
 
   const screens = {
     home: document.getElementById('scr-home'),
@@ -452,63 +756,88 @@
   function show(name) {
     Object.values(screens).forEach(s => s.classList.remove('active'));
     screens[name].classList.add('active');
+    document.getElementById('navHome').classList.toggle('active', name === 'home');
+    document.getElementById('navProfile').classList.toggle('active', name === 'profile');
     if (name === 'home') { stopCurrentGame(); renderHome(); }
-    if (name === 'profile') renderProfile();
+    if (name === 'profile') { stopCurrentGame(); renderProfile(); }
   }
-  document.querySelectorAll('[data-nav]').forEach(b =>
-    b.addEventListener('click', () => show(b.dataset.nav)));
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-nav]');
+    if (b) show(b.dataset.nav);
+  });
   document.getElementById('topbar').addEventListener('click', () => show('profile'));
+  document.getElementById('sideProfile').addEventListener('click', () => show('profile'));
 
-  /* ================= UI: РЕНДЕР ================= */
+  /* ================= РЕНДЕР ================= */
 
   function frameClass(f) { return f === 'none' ? '' : 'frame-' + f; }
 
   function renderTop() {
-    document.getElementById('topName').textContent = P.name;
+    const pct = Math.round(P.xp / xpNeed(P.level) * 100) + '%';
+    // мобильная шапка
+    document.getElementById('topName').textContent = playerName();
     document.getElementById('topLvl').textContent = P.level;
     document.getElementById('topTokens').textContent = P.tokens;
-    const ava = document.getElementById('topAva');
-    ava.textContent = P.avatar;
-    ava.className = 'ava ' + frameClass(P.frame);
-    document.getElementById('topXp').style.width =
-      Math.round(P.xp / xpNeed(P.level) * 100) + '%';
+    document.getElementById('topXp').style.width = pct;
+    const ta = document.getElementById('topAva');
+    ta.textContent = P.avatar; ta.className = 'ava ' + frameClass(P.frame);
+    // сайдбар
+    document.getElementById('sName').textContent = playerName();
+    document.getElementById('sLvl').textContent = P.level;
+    document.getElementById('sTokens').textContent = P.tokens;
+    document.getElementById('sXp').style.width = pct;
+    const sa = document.getElementById('sAva');
+    sa.textContent = P.avatar; sa.className = 'ava ' + frameClass(P.frame);
   }
 
+  /* ---- игры: конфиг (новые добавляются сюда) ---- */
+  const GAMES = [
+    { id: 'varenyk', em: '🥟', grad: 'linear-gradient(135deg,#F2A007,#C8451F)', best: p => p.best.varenyk > 0 ? p.best.varenyk : null },
+    { id: 'snake', em: '🐍', grad: 'linear-gradient(135deg,#2E7D4F,#7ED957)', best: p => p.best.snake > 0 ? p.best.snake : null },
+    { id: 'react', em: '⚡', grad: 'linear-gradient(135deg,#19C3E6,#7B1FA2)', best: p => p.best.react > 0 ? p.best.react + ' ' + t('ms') : null },
+    { id: 'miner', em: '💣', grad: 'linear-gradient(135deg,#6D6D6D,#2B2B2B)', best: p => p.best.miner > 0 ? p.best.miner + ' ' + t('s') : null }
+  ];
+
   function renderHome() {
-    document.getElementById('best-varenyk').textContent = P.best.varenyk;
-    document.getElementById('best-snake').textContent = P.best.snake;
-    document.getElementById('best-react').textContent =
-      P.best.react > 0 ? P.best.react + ' мс' : '—';
-    document.getElementById('best-miner').textContent =
-      P.best.miner > 0 ? P.best.miner + ' с' : '—';
+    const grid = document.getElementById('gamesGrid');
+    grid.innerHTML = '';
+    GAMES.forEach(g => {
+      const el = document.createElement('div');
+      el.className = 'gcard';
+      el.dataset.game = g.id;
+      const best = g.best(P);
+      el.innerHTML =
+        '<div class="cover" style="background:' + g.grad + '">' + g.em + '</div>' +
+        '<div class="gbody"><div class="nm">' + t('g_' + g.id) + '</div>' +
+        '<div class="ds">' + t('g_' + g.id + '_d') + '</div>' +
+        '<div class="bs">' + t('rec') + ': ' + (best === null ? '—' : best) + '</div></div>';
+      el.addEventListener('click', () => startGame(g.id));
+      grid.appendChild(el);
+    });
+    const soon = document.createElement('div');
+    soon.className = 'gcard soon';
+    soon.innerHTML =
+      '<div class="cover">🔒</div>' +
+      '<div class="gbody"><div class="nm">' + t('soon') + '</div>' +
+      '<div class="ds">' + t('soon_d') + '</div><div class="bs">&nbsp;</div></div>';
+    grid.appendChild(soon);
     renderDaily();
   }
 
-  const MASCOT_TIPS = [
-    'Кажуть, сметана 🥛 дає +5. Кажуть…',
-    'Мій рекорд у Змійці — 3. Я вареник, мені можна.',
-    'Назбирай токенів і купи собі 🐉!',
-    'Перець 🌶️ — не їжа. Запам\u2019ятай.',
-    'Зіграй у Реакцію. Але спершу прокинься 😴',
-    'Кожна гра дає XP. Навіть якщо програв!',
-    'Поділись грою з другом — і побий його рекорд.',
-    'У Сапері перший тап завжди безпечний. Далі — як пощастить 💣',
-    'Довгий тап у Сапері ставить прапорець 🚩',
-    'Заходь щодня — серія росте, бонус жирнішає 🎁',
-    'Зібрав усі досягнення? Не віриться. Перевір профіль 🏅'
-  ];
-  function mascot(html) { document.getElementById('mascotSay').innerHTML = '<b>Варенчик:</b> ' + html; }
+  /* ---- маскот ---- */
+  function mascot(html) {
+    document.getElementById('mascotSay').innerHTML = '<b>' + t('mname') + ':</b> ' + html;
+  }
   setInterval(() => {
     if (screens.home.classList.contains('active')) {
-      mascot(MASCOT_TIPS[Math.floor(Math.random() * MASCOT_TIPS.length)]);
+      const tips = t('tips');
+      mascot(tips[Math.floor(Math.random() * tips.length)]);
     }
   }, 9000);
 
   /* ---- ежедневный бонус ---- */
   function dateStr(d) {
-    return d.getFullYear() + '-' +
-      String(d.getMonth() + 1).padStart(2, '0') + '-' +
-      String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   }
   function todayStr() { return dateStr(new Date()); }
   function yesterdayStr() { const d = new Date(); d.setDate(d.getDate() - 1); return dateStr(d); }
@@ -517,11 +846,11 @@
   function renderDaily() {
     const box = document.getElementById('dailyBox');
     if (P.daily.last === todayStr()) {
-      box.innerHTML = '<span>✅ Бонус забрано · серія: ' + P.daily.streak + ' дн.</span><span>Повертайся завтра!</span>';
+      box.innerHTML = '<span>' + fmt(t('daily_done'), { n: P.daily.streak }) + '</span><span>' + t('daily_come') + '</span>';
     } else {
       const nextStreak = (P.daily.last === yesterdayStr()) ? P.daily.streak + 1 : 1;
-      box.innerHTML = '<span>🎁 Щоденний бонус · день ' + nextStreak + '</span>' +
-        '<button class="btn sm" id="dailyClaim" type="button">Забрати ' + dailyReward(nextStreak) + ' 🪙</button>';
+      box.innerHTML = '<span>' + fmt(t('daily_new'), { n: nextStreak }) + '</span>' +
+        '<button class="btn sm" id="dailyClaim" type="button">' + fmt(t('daily_take'), { n: dailyReward(nextStreak) }) + '</button>';
     }
   }
   document.getElementById('dailyBox').addEventListener('click', e => {
@@ -535,26 +864,26 @@
     save();
     addXp(10);
     renderDaily();
-    toast('🎁 +' + tk + ' 🪙 · серія ' + P.daily.streak + ' дн.');
-    mascot('Тримай щоденні токени! Серія — <b>' + P.daily.streak + '</b>. Не пропускай!');
+    toast(fmt(t('daily_toast'), { tk: tk, n: P.daily.streak }));
+    mascot(fmt(t('mascot_daily'), { n: P.daily.streak }));
     checkAch();
   });
 
   /* ---- достижения ---- */
   const ACHS = [
-    { id: 'first', em: '🎮', name: 'Перший раз', desc: 'Зіграй свою першу гру', tk: 10, cond: p => p.plays >= 1 },
-    { id: 'p25', em: '🔥', name: 'Завсідник', desc: 'Зіграй 25 ігор', tk: 30, cond: p => p.plays >= 25 },
-    { id: 'p100', em: '🏟️', name: 'Ігроман', desc: 'Зіграй 100 ігор', tk: 100, cond: p => p.plays >= 100 },
-    { id: 'var100', em: '🥟', name: 'Вареникова сотня', desc: 'Впіймай 100 вареників сумарно', tk: 40, cond: p => p.tot.varenyk >= 100 },
-    { id: 'var30', em: '👨‍🍳', name: 'Шеф-кухар', desc: '30+ очок за одну партію вареників', tk: 50, cond: p => p.best.varenyk >= 30 },
-    { id: 'snake15', em: '🐍', name: 'Анаконда', desc: '15+ яблук за одну партію змійки', tk: 50, cond: p => p.best.snake >= 15 },
-    { id: 'react250', em: '⚡', name: 'Кібер-рефлекс', desc: 'Середня реакція швидше 250 мс', tk: 50, cond: p => p.best.react > 0 && p.best.react < 250 },
-    { id: 'miner1', em: '💣', name: 'Розмінувальник', desc: 'Виграй партію в Сапера', tk: 40, cond: p => p.tot.minerWins >= 1 },
-    { id: 'miner60', em: '🕐', name: 'Швидка рука', desc: 'Виграй Сапера швидше 60 секунд', tk: 80, cond: p => p.best.miner > 0 && p.best.miner < 60 },
-    { id: 'lvl5', em: '⭐', name: 'П\u2019ятірка', desc: 'Досягни 5 рівня', tk: 50, cond: p => p.level >= 5 },
-    { id: 'lvl10', em: '🌟', name: 'Десятка', desc: 'Досягни 10 рівня', tk: 120, cond: p => p.level >= 10 },
-    { id: 'shop', em: '🛍️', name: 'Модник', desc: 'Купи свій перший аватар', tk: 20, cond: p => p.owned.length > 3 },
-    { id: 'streak7', em: '📅', name: 'Тиждень з нами', desc: 'Серія щоденних входів: 7 днів', tk: 100, cond: p => p.daily.streak >= 7 }
+    { id: 'first', em: '🎮', tk: 10, cond: p => p.plays >= 1 },
+    { id: 'p25', em: '🔥', tk: 30, cond: p => p.plays >= 25 },
+    { id: 'p100', em: '🏟️', tk: 100, cond: p => p.plays >= 100 },
+    { id: 'var100', em: '🥟', tk: 40, cond: p => p.tot.varenyk >= 100 },
+    { id: 'var30', em: '👨‍🍳', tk: 50, cond: p => p.best.varenyk >= 30 },
+    { id: 'snake15', em: '🐍', tk: 50, cond: p => p.best.snake >= 15 },
+    { id: 'react250', em: '⚡', tk: 50, cond: p => p.best.react > 0 && p.best.react < 250 },
+    { id: 'miner1', em: '💣', tk: 40, cond: p => p.tot.minerWins >= 1 },
+    { id: 'miner60', em: '🕐', tk: 80, cond: p => p.best.miner > 0 && p.best.miner < 60 },
+    { id: 'lvl5', em: '⭐', tk: 50, cond: p => p.level >= 5 },
+    { id: 'lvl10', em: '🌟', tk: 120, cond: p => p.level >= 10 },
+    { id: 'shop', em: '🛍️', tk: 20, cond: p => p.owned.length > 3 },
+    { id: 'streak7', em: '📅', tk: 100, cond: p => p.daily.streak >= 7 }
   ];
   function checkAch() {
     const got = [];
@@ -568,7 +897,7 @@
     if (got.length) {
       save(); renderTop();
       got.forEach((a, i) => setTimeout(() =>
-        toast('🏅 Досягнення «' + a.name + '» +' + a.tk + ' 🪙'), i * 2400));
+        toast(fmt(t('ach_toast'), { x: t('ach')[a.id][0], tk: a.tk })), i * 2400));
     }
   }
 
@@ -580,23 +909,21 @@
     { em: '🐉', price: 350 }, { em: '👑', price: 500 }, { em: '💩', price: 999 }
   ];
   const FRAMES = [
-    { id: 'none', em: '⬜', name: 'Без рамки', price: 0 },
-    { id: 'gold', em: '🟨', name: 'Золото', price: 150 },
-    { id: 'neon', em: '🟦', name: 'Неон', price: 250 },
-    { id: 'fire', em: '🟧', name: 'Вогонь', price: 400 }
+    { id: 'none', em: '⬜', price: 0 },
+    { id: 'gold', em: '🟨', price: 150 },
+    { id: 'neon', em: '🟦', price: 250 },
+    { id: 'fire', em: '🟧', price: 400 }
   ];
 
   function renderProfile() {
-    document.getElementById('profName').textContent = P.name;
+    document.getElementById('profName').textContent = playerName();
     document.getElementById('profLvl').textContent = P.level;
     document.getElementById('profTokens').textContent = P.tokens;
     const ava = document.getElementById('profAva');
     ava.textContent = P.avatar;
     ava.className = 'ava ' + frameClass(P.frame);
-    document.getElementById('profXp').style.width =
-      Math.round(P.xp / xpNeed(P.level) * 100) + '%';
-    document.getElementById('profXpText').textContent =
-      P.xp + ' / ' + xpNeed(P.level) + ' XP до рівня ' + (P.level + 1);
+    document.getElementById('profXp').style.width = Math.round(P.xp / xpNeed(P.level) * 100) + '%';
+    document.getElementById('profXpText').textContent = fmt(t('xp_to'), { a: P.xp, b: xpNeed(P.level), n: P.level + 1 });
     document.getElementById('nickInput').value = P.name;
 
     // аватары
@@ -607,16 +934,16 @@
       const el = document.createElement('div');
       el.className = 'shop-item' + (owned ? ' owned' : '') + (P.avatar === a.em ? ' equipped' : '');
       el.innerHTML = '<div class="em">' + a.em + '</div><div class="pr">' +
-        (owned ? (P.avatar === a.em ? 'обрано' : 'є') : a.price + ' 🪙') + '</div>';
+        (owned ? (P.avatar === a.em ? t('equipped') : t('owned')) : a.price + ' 🪙') + '</div>';
       el.addEventListener('click', () => {
         if (owned) { P.avatar = a.em; save(); renderTop(); renderProfile(); return; }
         if (P.tokens >= a.price) {
           P.tokens -= a.price; P.owned.push(a.em); P.avatar = a.em;
           save(); renderTop(); renderProfile();
-          toast('Куплено ' + a.em + '!');
+          toast(fmt(t('bought'), { x: a.em }));
           checkAch();
         } else {
-          toast('Не вистачає токенів 🪙 Грай більше!');
+          toast(t('no_tokens'));
         }
       });
       shop.appendChild(el);
@@ -630,16 +957,17 @@
       const el = document.createElement('div');
       el.className = 'shop-item' + (owned ? ' owned' : '') + (P.frame === f.id ? ' equipped' : '');
       el.innerHTML = '<div class="em">' + f.em + '</div><div class="pr">' +
-        (owned ? (P.frame === f.id ? 'обрано' : 'є') : f.price + ' 🪙') + '</div>';
-      el.title = f.name;
+        (owned ? (P.frame === f.id ? t('equipped') : t('owned')) : f.price + ' 🪙') + '</div>';
+      el.title = t('fr_' + f.id);
       el.addEventListener('click', () => {
         if (owned) { P.frame = f.id; save(); renderTop(); renderProfile(); return; }
         if (P.tokens >= f.price) {
           P.tokens -= f.price; P.ownedFrames.push(f.id); P.frame = f.id;
           save(); renderTop(); renderProfile();
-          toast('Рамка «' + f.name + '» твоя!');
+          toast(fmt(t('frame_bought'), { x: t('fr_' + f.id) }));
+          checkAch();
         } else {
-          toast('Не вистачає токенів 🪙');
+          toast(t('no_tokens'));
         }
       });
       fshop.appendChild(el);
@@ -653,39 +981,62 @@
       (P.ach.includes(b.id) ? 1 : 0) - (P.ach.includes(a.id) ? 1 : 0));
     sorted.forEach(a => {
       const done = P.ach.includes(a.id);
+      const names = t('ach')[a.id];
       const el = document.createElement('div');
       el.className = 'ach-row ' + (done ? 'done' : 'locked');
       el.innerHTML = '<span class="em">' + a.em + '</span>' +
-        '<div class="tx"><b>' + a.name + '</b><small>' + a.desc + '</small></div>' +
+        '<div class="tx"><b>' + names[0] + '</b><small>' + names[1] + '</small></div>' +
         '<span class="rw">' + (done ? '✅' : '+' + a.tk + ' 🪙') + '</span>';
       achBox.appendChild(el);
     });
 
     // статистика
     document.getElementById('statsBox').innerHTML =
-      '<div class="stat-row"><span>Зіграно ігор</span><b>' + P.plays + '</b></div>' +
-      '<div class="stat-row"><span>🥟 Вареники — рекорд</span><b>' + P.best.varenyk + '</b></div>' +
-      '<div class="stat-row"><span>🐍 Змійка — рекорд</span><b>' + P.best.snake + '</b></div>' +
-      '<div class="stat-row"><span>⚡ Реакція — найкраща</span><b>' +
-        (P.best.react > 0 ? P.best.react + ' мс' : '—') + '</b></div>' +
-      '<div class="stat-row"><span>💣 Сапер — найшвидша перемога</span><b>' +
-        (P.best.miner > 0 ? P.best.miner + ' с' : '—') + '</b></div>';
+      '<div class="stat-row"><span>' + t('st_plays') + '</span><b>' + P.plays + '</b></div>' +
+      '<div class="stat-row"><span>' + t('st_var') + '</span><b>' + P.best.varenyk + '</b></div>' +
+      '<div class="stat-row"><span>' + t('st_snake') + '</span><b>' + P.best.snake + '</b></div>' +
+      '<div class="stat-row"><span>' + t('st_react') + '</span><b>' +
+        (P.best.react > 0 ? P.best.react + ' ' + t('ms') : '—') + '</b></div>' +
+      '<div class="stat-row"><span>' + t('st_miner') + '</span><b>' +
+        (P.best.miner > 0 ? P.best.miner + ' ' + t('s') : '—') + '</b></div>';
   }
 
   document.getElementById('nickSave').addEventListener('click', () => {
     const v = document.getElementById('nickInput').value.trim();
-    if (v) { P.name = v; save(); renderTop(); renderProfile(); toast('Нік збережено!'); }
+    if (v) { P.name = v; save(); renderTop(); renderProfile(); toast(t('nick_saved')); }
   });
 
   function toast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(t._tm);
-    t._tm = setTimeout(() => t.classList.remove('show'), 2200);
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(el._tm);
+    el._tm = setTimeout(() => el.classList.remove('show'), 2200);
   }
 
-  /* ================= ИГРОВОЙ ДВИЖОК (общая сцена) ================= */
+  /* ---- применение языка к статике ---- */
+  function applyLang() {
+    document.getElementById('subTag').textContent = t('tag');
+    document.getElementById('navHome').textContent = t('nav_home');
+    document.getElementById('navProfile').textContent = t('nav_profile');
+    document.getElementById('profBack').textContent = t('back');
+    document.getElementById('gameBack').textContent = t('exit');
+    document.getElementById('hAva').textContent = t('h_ava');
+    document.getElementById('hFr').textContent = t('h_fr');
+    document.getElementById('hAch').textContent = t('h_ach');
+    document.getElementById('hSt').textContent = t('h_st');
+    document.getElementById('nickInput').placeholder = t('nick_ph');
+    document.querySelectorAll('[data-lang]').forEach(b =>
+      b.classList.toggle('active', b.dataset.lang === LANG));
+    ['lvlWordS', 'lvlWordT', 'lvlWordP'].forEach(id =>
+      document.getElementById(id).textContent = t('lvl'));
+    renderTop();
+    if (screens.home.classList.contains('active')) renderHome();
+    if (screens.profile.classList.contains('active')) renderProfile();
+    mascot(t('tips')[0]);
+  }
+
+  /* ================= ИГРОВОЙ ДВИЖОК ================= */
 
   const stage = document.getElementById('stage');
   const cv = document.getElementById('cv');
@@ -708,7 +1059,7 @@
   }
   window.addEventListener('resize', resize);
 
-  let current = null; // текущая игра {stop()}
+  let current = null;
   function stopCurrentGame() {
     if (current && current.stop) current.stop();
     current = null;
@@ -730,7 +1081,6 @@
   }
   function hideOverlay() { overlay.classList.add('hidden'); }
 
-  // выдать награду после игры; возвращает [xp, tokens]
   function grantReward(game, score, xp, tk, isRecordLower) {
     P.plays++;
     if (game === 'varenyk') P.tot.varenyk += score;
@@ -746,9 +1096,6 @@
     return isRecord;
   }
 
-  document.querySelectorAll('.gcard[data-game]').forEach(c =>
-    c.addEventListener('click', () => startGame(c.dataset.game)));
-
   function startGame(name) {
     show('game');
     resize();
@@ -759,7 +1106,7 @@
     if (name === 'miner') current = gameMiner();
   }
 
-  /* ================= ИГРА 1: ВПІЙМАЙ ВАРЕНИК ================= */
+  /* ================= ИГРА 1: ВАРЕНИК ================= */
 
   function gameVarenyk() {
     let running = false, raf = 0;
@@ -768,12 +1115,10 @@
     let items = [];
     const keys = {};
 
-    gameHint.textContent = 'Веди пальцем по полю або стрілками ← →';
+    gameHint.textContent = t('var_hint');
     updateHud();
 
-    function updateHud() {
-      gameHud.innerHTML = '❤️ ' + lives + ' &nbsp; 🥟 ' + score;
-    }
+    function updateHud() { gameHud.innerHTML = '❤️ ' + lives + ' &nbsp; 🥟 ' + score; }
 
     const TYPES = {
       varenyk: { emoji: '🥟', weight: 62, points: 1 },
@@ -781,9 +1126,9 @@
       pepper: { emoji: '🌶️', weight: 30, points: 0 }
     };
     function pickType() {
-      let total = 0; for (const t of Object.values(TYPES)) total += t.weight;
+      let total = 0; for (const x of Object.values(TYPES)) total += x.weight;
       let r = Math.random() * total;
-      for (const [n, t] of Object.entries(TYPES)) if ((r -= t.weight) < 0) return n;
+      for (const [n, x] of Object.entries(TYPES)) if ((r -= x.weight) < 0) return n;
       return 'varenyk';
     }
 
@@ -800,8 +1145,8 @@
       const xp = score * 2;
       const tk = Math.floor(score / 4);
       const rec = grantReward('varenyk', score, xp, tk, false);
-      showOverlay(rec ? '🏆' : '😵', rec ? 'Новий рекорд!' : 'Гру закінчено',
-        'Впіймано вареників: ' + score, xp, tk, 'Ще раз');
+      showOverlay(rec ? '🏆' : '😵', rec ? t('record') : t('var_over'),
+        fmt(t('var_score'), { n: score }), xp, tk, t('again'));
     }
 
     function loop(now) {
@@ -837,7 +1182,6 @@
         }
       }
 
-      // draw
       ctx.clearRect(0, 0, W, H);
       if (flash > 0) { ctx.fillStyle = 'rgba(220,60,30,' + flash * 0.5 + ')'; ctx.fillRect(0, 0, W, H); }
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
@@ -856,33 +1200,29 @@
       const r = stage.getBoundingClientRect();
       targetX = Math.min(Math.max((e.clientX - r.left) / r.width, 0.06), 0.94);
     }
-    function onDown(e) { onPointer(e); }
-    function onMove(e) { if (e.pointerType !== 'mouse' || e.buttons > 0) onPointer(e); else onPointer(e); }
     function onKeyDown(e) { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { keys[e.key] = true; e.preventDefault(); } }
     function onKeyUp(e) { keys[e.key] = false; }
 
-    stage.addEventListener('pointerdown', onDown);
-    stage.addEventListener('pointermove', onMove);
+    stage.addEventListener('pointerdown', onPointer);
+    stage.addEventListener('pointermove', onPointer);
     window.addEventListener('keydown', onKeyDown);
     window.addEventListener('keyup', onKeyUp);
     ovBtn.onclick = begin;
 
-    showOverlay('🥟', 'Впіймай вареник',
-      'Вареник +1, сметана +5, перець — мінус життя. Впав вареник — теж мінус!',
-      null, null, 'Грати');
+    showOverlay('🥟', t('g_varenyk'), t('var_intro'), null, null, t('play'));
 
     return {
       stop() {
         running = false; cancelAnimationFrame(raf);
-        stage.removeEventListener('pointerdown', onDown);
-        stage.removeEventListener('pointermove', onMove);
+        stage.removeEventListener('pointerdown', onPointer);
+        stage.removeEventListener('pointermove', onPointer);
         window.removeEventListener('keydown', onKeyDown);
         window.removeEventListener('keyup', onKeyUp);
       }
     };
   }
 
-  /* ================= ИГРА 2: ЗМІЙКА ================= */
+  /* ================= ИГРА 2: ЗМЕЙКА ================= */
 
   function gameSnake() {
     const COLS = 15, ROWS = 20;
@@ -890,14 +1230,15 @@
     let snake, dir, nextDir, food, score = 0, speed;
     let touchStart = null;
 
-    gameHint.textContent = 'Свайпи пальцем або стрілки на клавіатурі';
+    gameHint.textContent = t('sn_hint');
 
     function updateHud() { gameHud.innerHTML = '🍎 ' + score; }
+    updateHud();
 
     function placeFood() {
       while (true) {
         const f = { x: Math.floor(Math.random() * COLS), y: Math.floor(Math.random() * ROWS) };
-        if (!snake.some(s => s.x === f.x && s.y === f.y)) return f;
+        if (!snake.some(sg => sg.x === f.x && sg.y === f.y)) return f;
       }
     }
 
@@ -916,15 +1257,15 @@
       const xp = score * 3;
       const tk = Math.floor(score / 3);
       const rec = grantReward('snake', score, xp, tk, false);
-      showOverlay(rec ? '🏆' : '💀', rec ? 'Новий рекорд!' : 'Ай, вкусилась!',
-        'З\u2019їдено яблук: ' + score, xp, tk, 'Ще раз');
+      showOverlay(rec ? '🏆' : '💀', rec ? t('record') : t('sn_over'),
+        fmt(t('sn_score'), { n: score }), xp, tk, t('again'));
     }
 
     function step() {
       dir = nextDir;
       const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
       if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS) return over();
-      if (snake.some(s => s.x === head.x && s.y === head.y)) return over();
+      if (snake.some(sg => sg.x === head.x && sg.y === head.y)) return over();
       snake.unshift(head);
       if (head.x === food.x && head.y === food.y) {
         score++; updateHud();
@@ -943,7 +1284,6 @@
       while (acc >= interval && running) { acc -= interval; step(); }
       if (!running) return;
 
-      // draw
       const cell = Math.min(W / COLS, H / ROWS);
       const ox = (W - cell * COLS) / 2, oy = (H - cell * ROWS) / 2;
       ctx.clearRect(0, 0, W, H);
@@ -956,14 +1296,13 @@
       ctx.fillText('🍎', ox + (food.x + 0.5) * cell, oy + (food.y + 0.55) * cell);
 
       const green = cs.getPropertyValue('--green').trim();
-      snake.forEach((s, i) => {
+      snake.forEach((sg, i) => {
         ctx.fillStyle = green;
         const pad = i === 0 ? 1 : 2;
         ctx.beginPath();
-        ctx.roundRect(ox + s.x * cell + pad, oy + s.y * cell + pad, cell - pad * 2, cell - pad * 2, cell * 0.25);
+        ctx.roundRect(ox + sg.x * cell + pad, oy + sg.y * cell + pad, cell - pad * 2, cell - pad * 2, cell * 0.25);
         ctx.fill();
       });
-      // глазки
       const h = snake[0];
       ctx.fillStyle = '#fff';
       const ex = ox + (h.x + 0.5) * cell, ey = oy + (h.y + 0.4) * cell;
@@ -974,18 +1313,18 @@
     }
 
     function turn(nx, ny) {
-      if (nx === -dir.x && ny === -dir.y) return; // нельзя разворот на 180
+      if (nx === -dir.x && ny === -dir.y) return;
       nextDir = { x: nx, y: ny };
     }
     function onKey(e) {
       const m = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
       if (m[e.key]) { e.preventDefault(); turn(m[e.key][0], m[e.key][1]); }
     }
-    function onTouchStart(e) { const t = e.changedTouches[0]; touchStart = { x: t.clientX, y: t.clientY }; }
+    function onTouchStart(e) { const tt = e.changedTouches[0]; touchStart = { x: tt.clientX, y: tt.clientY }; }
     function onTouchEnd(e) {
       if (!touchStart) return;
-      const t = e.changedTouches[0];
-      const dx = t.clientX - touchStart.x, dy = t.clientY - touchStart.y;
+      const tt = e.changedTouches[0];
+      const dx = tt.clientX - touchStart.x, dy = tt.clientY - touchStart.y;
       if (Math.abs(dx) < 18 && Math.abs(dy) < 18) return;
       if (Math.abs(dx) > Math.abs(dy)) turn(dx > 0 ? 1 : -1, 0);
       else turn(0, dy > 0 ? 1 : -1);
@@ -997,8 +1336,7 @@
     stage.addEventListener('touchend', onTouchEnd, { passive: true });
     ovBtn.onclick = begin;
 
-    showOverlay('🐍', 'Змійка', 'Їж яблука, рости, не врізайся в стіни й себе. Швидкість росте!',
-      null, null, 'Грати');
+    showOverlay('🐍', t('g_snake'), t('sn_intro'), null, null, t('play'));
 
     return {
       stop() {
@@ -1010,15 +1348,15 @@
     };
   }
 
-  /* ================= ИГРА 3: РЕАКЦІЯ ================= */
+  /* ================= ИГРА 3: РЕАКЦИЯ ================= */
 
   function gameReact() {
     const ROUNDS = 5;
-    let phase = 'idle'; // idle | wait | go | done
+    let phase = 'idle';
     let round = 0, times = [], tm = 0, goAt = 0;
 
-    gameHint.textContent = 'Чекай зеленого і тисни якнайшвидше. 5 раундів.';
-    function updateHud() { gameHud.innerHTML = '⚡ раунд ' + Math.min(round + 1, ROUNDS) + '/' + ROUNDS; }
+    gameHint.textContent = t('re_hint');
+    function updateHud() { gameHud.innerHTML = fmt(t('re_round'), { a: Math.min(round + 1, ROUNDS), b: ROUNDS }); }
     updateHud();
 
     function draw(color, big, small) {
@@ -1043,29 +1381,29 @@
 
     function nextRound() {
       phase = 'wait';
-      draw('#C8451F', 'Чекай…', 'Тисни, коли стане зелено');
+      draw('#C8451F', t('re_wait'), t('re_wait2'));
       clearTimeout(tm);
       tm = setTimeout(() => {
         phase = 'go';
         goAt = performance.now();
-        draw('#2E7D4F', 'ТИСНИ!', '');
+        draw('#2E7D4F', t('re_go'), '');
       }, 1200 + Math.random() * 2300);
     }
 
     function tap() {
       if (phase === 'wait') {
         clearTimeout(tm);
-        draw('#7A6A55', 'Зарано! 😅', 'Дочекайся зеленого');
+        draw('#7A6A55', t('re_early'), t('re_early2'));
         tm = setTimeout(nextRound, 1000);
         return;
       }
       if (phase === 'go') {
-        const t = Math.round(performance.now() - goAt);
-        times.push(t);
+        const ms = Math.round(performance.now() - goAt);
+        times.push(ms);
         round++;
         updateHud();
         if (round >= ROUNDS) return finish();
-        draw('#38281A', t + ' мс', times.length < ROUNDS ? 'Далі…' : '');
+        draw('#38281A', ms + ' ' + t('ms'), t('re_next'));
         clearTimeout(tm);
         tm = setTimeout(nextRound, 900);
       }
@@ -1076,22 +1414,21 @@
       const avg = Math.round(times.reduce((a, b) => a + b, 0) / times.length);
       const xp = Math.max(6, 65 - Math.floor(avg / 8));
       const tk = Math.max(1, 22 - Math.floor(avg / 20));
-      const rec = grantReward('react', avg, xp, tk, true); // меньше = лучше
+      const rec = grantReward('react', avg, xp, tk, true);
       let cmt;
-      if (avg < 220) cmt = 'Кібер-рефлекси! Ти точно людина?';
-      else if (avg < 300) cmt = 'Дуже спритно!';
-      else if (avg < 400) cmt = 'Нормальна людська реакція.';
-      else cmt = 'Варенчик і то швидший… але XP твій!';
-      showOverlay(rec ? '🏆' : '⚡', rec ? 'Новий рекорд!' : 'Готово!',
-        'Середня реакція: ' + avg + ' мс. ' + cmt, xp, tk, 'Ще раз');
+      if (avg < 220) cmt = t('re_c1');
+      else if (avg < 300) cmt = t('re_c2');
+      else if (avg < 400) cmt = t('re_c3');
+      else cmt = t('re_c4');
+      showOverlay(rec ? '🏆' : '⚡', rec ? t('record') : t('re_done'),
+        fmt(t('re_res'), { n: avg, c: cmt }), xp, tk, t('again'));
     }
 
     function onTap(e) { e.preventDefault(); tap(); }
     stage.addEventListener('pointerdown', onTap);
     ovBtn.onclick = begin;
 
-    showOverlay('⚡', 'Реакція', 'Екран червоний — чекай. Став зелений — тисни! 5 раундів, рахуємо середнє.',
-      null, null, 'Грати');
+    showOverlay('⚡', t('g_react'), t('re_intro'), null, null, t('play'));
 
     return {
       stop() {
@@ -1101,7 +1438,7 @@
     };
   }
 
-  /* ================= ИГРА 4: САПЕР ================= */
+  /* ================= ИГРА 4: САПЁР ================= */
 
   function gameMiner() {
     const COLS = 9, ROWS = 12, MINES = 14;
@@ -1110,16 +1447,14 @@
     let time = 0, timerInt = 0, flagMode = false;
     let pressCell = null, longTm = 0, longFired = false;
 
-    gameHint.innerHTML = 'Тап — відкрити, довгий тап — прапорець 🚩. Режим прапорця: <button class="btn sm ghost" id="flagBtn" type="button">🚩 вимк</button>';
+    gameHint.innerHTML = t('mi_hint') + '<button class="btn sm ghost" id="flagBtn" type="button">' + t('mi_flag_off') + '</button>';
     const flagBtn = document.getElementById('flagBtn');
     flagBtn.addEventListener('click', () => {
       flagMode = !flagMode;
-      flagBtn.textContent = flagMode ? '🚩 УВІМК' : '🚩 вимк';
+      flagBtn.textContent = flagMode ? t('mi_flag_on') : t('mi_flag_off');
     });
 
-    function updateHud() {
-      gameHud.innerHTML = '💣 ' + flagsLeft + ' &nbsp; ⏱ ' + time + ' с';
-    }
+    function updateHud() { gameHud.innerHTML = '💣 ' + flagsLeft + ' &nbsp; ⏱ ' + time + ' ' + t('s'); }
 
     function makeGrid() {
       grid = [];
@@ -1139,7 +1474,6 @@
     }
 
     function placeMines(sx, sy) {
-      // первый клик всегда безопасен (и его соседи тоже)
       const banned = new Set([sy * COLS + sx]);
       neighbors(sx, sy, (nx, ny) => banned.add(ny * COLS + nx));
       let placed = 0;
@@ -1205,9 +1539,9 @@
       clearInterval(timerInt);
       draw(true);
       const xp = Math.max(3, Math.round(revealed * 0.6));
-      grantReward('miner', 0, xp, 1, true); // поражение рекорд не меняет (0 отсеется)
+      grantReward('miner', 0, xp, 1, true);
       setTimeout(() => {
-        showOverlay('💥', 'Бум!', 'Міна… Відкрито клітинок: ' + revealed + '. Трохи XP за сміливість!', xp, 1, 'Ще раз');
+        showOverlay('💥', t('mi_boom'), fmt(t('mi_boom_t'), { n: revealed }), xp, 1, t('again'));
       }, 900);
     }
 
@@ -1219,8 +1553,8 @@
       const xp = Math.max(35, 130 - time);
       const tk = Math.max(8, 35 - Math.floor(time / 8));
       const rec = grantReward('miner', time, xp, tk, true);
-      showOverlay(rec ? '🏆' : '🎖️', rec ? 'Новий рекорд!' : 'Поле чисте!',
-        'Розміновано за ' + time + ' с. Варенчик пишається!', xp, tk, 'Ще раз');
+      showOverlay(rec ? '🏆' : '🎖️', rec ? t('record') : t('mi_win'),
+        fmt(t('mi_win_t'), { n: time }), xp, tk, t('again'));
     }
 
     function reveal(x, y) {
@@ -1228,7 +1562,6 @@
       if (c.open || c.flag) return;
       if (!started) { placeMines(x, y); started = true; startTimer(); }
       if (c.mine) { c.open = true; return lose(); }
-      // flood fill
       const stack = [[x, y]];
       while (stack.length) {
         const [cx, cy] = stack.pop();
@@ -1246,7 +1579,7 @@
     function toggleFlag(x, y) {
       const c = grid[y][x];
       if (c.open) return;
-      if (!c.flag && flagsLeft <= 0) { toast('Прапорці скінчились!'); return; }
+      if (!c.flag && flagsLeft <= 0) { toast(t('mi_flags_out')); return; }
       c.flag = !c.flag;
       flagsLeft += c.flag ? -1 : 1;
       updateHud(); draw(false);
@@ -1283,7 +1616,7 @@
       pressCell = null;
     }
     function onCancel() { clearTimeout(longTm); pressCell = null; }
-    function onCtx(e) { e.preventDefault(); } // ПКМ/долгий тап без меню
+    function onCtx(e) { e.preventDefault(); }
 
     stage.addEventListener('pointerdown', onDown);
     stage.addEventListener('pointerup', onUp);
@@ -1291,8 +1624,7 @@
     stage.addEventListener('contextmenu', onCtx);
     ovBtn.onclick = begin;
 
-    showOverlay('💣', 'Сапер', 'Відкрий усі клітинки без мін. Цифра — скільки мін поруч. Перший тап завжди безпечний!',
-      null, null, 'Грати');
+    showOverlay('💣', t('g_miner'), t('mi_intro'), null, null, t('play'));
 
     return {
       stop() {
@@ -1306,7 +1638,8 @@
   }
 
   /* ================= СТАРТ ================= */
-  renderTop();
+  document.documentElement.lang = LANG === 'uk' ? 'uk' : LANG;
+  applyLang();
   renderHome();
 })();
 </script>
